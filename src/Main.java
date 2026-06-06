@@ -117,7 +117,7 @@ public class Main {
         System.out.println("  Total after discount: $" + memberStrategy.calculateTotal(originalAmount));
         
         // Seasonal pricing
-        BillingStrategy seasonalStrategy = new SeasonalPricing("summer");
+        BillingStrategy seasonalStrategy = new SummerPricing();
         System.out.println("\n  📊 " + seasonalStrategy.getStrategyName());
         System.out.println("  Total after adjustment: $" + seasonalStrategy.calculateTotal(originalAmount));
         

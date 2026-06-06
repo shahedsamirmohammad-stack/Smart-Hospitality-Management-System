@@ -1,26 +1,26 @@
-// Name: Shahed Samir Mohammed
-// ID: 220231639
-
 package rooms;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
 public class RoomFactory {
-    
-    // Factory Method - creates different room types
-    public static Room createRoom(String roomType) {
-        if (roomType == null) {
-            return null;
+
+    private static final Map<String, Supplier<Room>> roomCreators = new HashMap<>();
+
+    static {
+        roomCreators.put("standard", StandardRoom::new);
+        roomCreators.put("deluxe", DeluxeRoom::new);
+        roomCreators.put("suite", SuiteRoom::new);
+    }
+
+    public static Room createRoom(String type) {
+        Supplier<Room> creator = roomCreators.get(type.toLowerCase());
+
+        if (creator == null) {
+            throw new IllegalArgumentException("Invalid room type: " + type);
         }
-        
-        switch (roomType.toLowerCase()) {
-            case "standard":
-                return new StandardRoom();
-            case "deluxe":
-                return new DeluxeRoom();
-            case "suite":
-                return new SuiteRoom();
-            default:
-                System.out.println("[FACTORY] Unknown room type: " + roomType);
-                return null;
-        }
+
+        return creator.get();
     }
 }
